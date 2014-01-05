@@ -1,0 +1,5 @@
+ztm-mysql {
+    host = "" /* hostname with optional port */
+    username = ""
+    password = ""
+}
