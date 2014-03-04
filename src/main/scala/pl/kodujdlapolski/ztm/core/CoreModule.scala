@@ -1,12 +1,11 @@
 package pl.kodujdlapolski.ztm.core
 
-import com.escalatesoft.subcut.inject.NewBindingModule
+import com.softwaremill.macwire.Macwire
 import pl.kodujdlapolski.ztm.config.CoreConfig
 
+trait CoreModule extends Macwire {
 
-object CoreModule extends NewBindingModule(module => {
-  import module._
+  lazy val config = wire[CoreConfig]
+}
 
-  bind[CoreConfig] toSingle CoreConfig
-
-})
+object CoreModule extends CoreModule

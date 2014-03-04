@@ -10,5 +10,6 @@ libraryDependencies ++= Seq(
   "org.slf4j" % "slf4j-nop" % "1.6.4",
   "mysql" % "mysql-connector-java" % "5.1.28",
   "com.typesafe" % "config" % "1.0.2",
-  "com.escalatesoft.subcut" %% "subcut" % "2.0"
+  "com.softwaremill.macwire" %% "macros" % "0.5",
+  "com.softwaremill.macwire" %% "runtime" % "0.5"
 )
