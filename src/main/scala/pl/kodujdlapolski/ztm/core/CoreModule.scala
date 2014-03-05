@@ -10,17 +10,16 @@ trait CoreModule extends Macwire {
 
   lazy val config = wire[CoreConfig]
 
-  private lazy val timetablesDbInternal: Database = ztmDb("rozklady")
+  lazy val timetableDb = ztmDb("rozklady")
 
-  lazy val timetableDb = new DatabaseWrapper(timetablesDbInternal)
+  lazy val statsDb = ztmDb("statystyki")
 
-  private lazy val statsDbInternal : Database = ztmDb("statystyki")
-
-  private def ztmDb(name : String) : Database =
+  private def ztmDb(name: String): DatabaseWrapper = new DatabaseWrapper(
     Database.forURL(url = s"jdbc:mysql://${config.ztmDbHost}/$name",
       user = config.ztmDbUsername,
       password = config.ztmDbPassword,
       driver = "com.mysql.jdbc.Driver")
+  )
 
 }
 

@@ -1,6 +1,6 @@
 package pl.kodujdlapolski.ztm.core
 
-import pl.kodujdlapolski.ztm.procs.ProcsModule
+import pl.kodujdlapolski.ztm.records.ProcsModule
 
 class Beans extends CoreModule with ProcsModule
 
