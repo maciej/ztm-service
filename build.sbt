@@ -11,5 +11,7 @@ libraryDependencies ++= Seq(
   "mysql" % "mysql-connector-java" % "5.1.28",
   "com.typesafe" % "config" % "1.0.2",
   "com.softwaremill.macwire" %% "macros" % "0.5",
-  "com.softwaremill.macwire" %% "runtime" % "0.5"
+  "com.softwaremill.macwire" %% "runtime" % "0.5",
+  "joda-time" % "joda-time" % "2.1",
+  "org.joda" % "joda-convert" % "1.2" // See http://stackoverflow.com/questions/13856266/class-broken-error-with-joda-time-using-scala
 )
