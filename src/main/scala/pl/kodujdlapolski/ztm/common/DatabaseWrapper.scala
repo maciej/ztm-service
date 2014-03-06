@@ -2,7 +2,13 @@ package pl.kodujdlapolski.ztm.common
 
 import scala.slick.driver.MySQLDriver.simple._
 
-class DatabaseWrapper(db : Database) {
+class TimetableDb(val db : Database) extends DatabaseWrapper
+class StatsDb(val db : Database) extends DatabaseWrapper
+
+trait DatabaseWrapper {
+
+  val db : Database
+
   def withSession[T](f: Session => T): T  = db.withSession(f)
 
   def withTransaction[T](f: Session => T): T = db.withTransaction(f)
