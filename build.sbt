@@ -12,3 +12,7 @@ libraryDependencies ++= Seq(
   "mysql" % "mysql-connector-java" % "5.1.28",
   "com.typesafe" % "config" % "1.0.2"
 ) ++ jodaTime ++ macwire ++ logging
+
+// http://stackoverflow.com/questions/21435023/how-to-change-jdk-set-by-sbt-import-in-intellij-idea
+javacOptions in Compile ++= Seq("-source", "1.7", "-target", "1.7")
+
