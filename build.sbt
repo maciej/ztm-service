@@ -16,6 +16,9 @@ libraryDependencies ++= Seq(
   "com.typesafe" % "config" % "1.0.2"
 ) ++ jodaTime ++ macwire ++ logging ++ akka ++ spray
 
+// http://stackoverflow.com/questions/21435023/how-to-change-jdk-set-by-sbt-import-in-intellij-idea
+javacOptions in Compile ++= Seq("-source", "1.7", "-target", "1.7")
+
 scalacOptions ++= Seq(
   "-unchecked",
   "-deprecation",
