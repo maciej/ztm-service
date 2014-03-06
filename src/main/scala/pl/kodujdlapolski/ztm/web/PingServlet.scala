@@ -1,7 +1,7 @@
 package pl.kodujdlapolski.ztm.web
 
 import org.scalatra.ScalatraServlet
-import org.scalatra.{BadRequest, Ok, FlashMapSupport}
+import org.scalatra.Ok
 
 class PingServlet extends ScalatraServlet {
 
