@@ -7,13 +7,13 @@ object SqlDate extends NumericYearMonthDate
 
 object NumericYearMonthDate extends NumericYearMonthDate
 
-trait NumericYearMonthDate extends NamedDateTimeFormat {
+trait NumericYearMonthDate extends NamedDateFormat {
 
   override val Format = DateTimeFormat.forPattern("YYYY-MM-dd")
 
 }
 
-trait NamedDateTimeFormat {
+trait NamedDateFormat {
 
   val Format: DateTimeFormatter
 

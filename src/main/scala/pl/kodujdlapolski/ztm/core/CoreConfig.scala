@@ -1,4 +1,4 @@
-package pl.kodujdlapolski.ztm.config
+package pl.kodujdlapolski.ztm.core
 
 import com.typesafe.config.ConfigFactory
 

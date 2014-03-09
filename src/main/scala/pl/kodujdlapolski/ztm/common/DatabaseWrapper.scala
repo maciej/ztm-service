@@ -4,6 +4,7 @@ import scala.slick.driver.MySQLDriver.simple._
 
 class TimetableDb(val db : Database) extends DatabaseWrapper
 class StatsDb(val db : Database) extends DatabaseWrapper
+class InfoDb(val db: Database) extends DatabaseWrapper
 
 trait DatabaseWrapper {
 

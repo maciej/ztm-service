@@ -8,4 +8,7 @@ trait ProcsModule extends CoreModule {
   lazy val engineVersionProc = wire[EngineVersionProc]
 
   lazy val metroValidationsProc = wire[MetroValidationsProc]
+
+  lazy val vehicleLocationsProc = wire[VehicleLocationsProc]
+
 }

@@ -1,10 +1,9 @@
 package pl.kodujdlapolski.ztm.core
 
 import com.softwaremill.macwire.Macwire
-import pl.kodujdlapolski.ztm.config.CoreConfig
 
 import scala.slick.driver.MySQLDriver.simple._
-import pl.kodujdlapolski.ztm.common.{StatsDb, TimetableDb, DatabaseWrapper}
+import pl.kodujdlapolski.ztm.common.{InfoDb, StatsDb, TimetableDb}
 
 trait CoreModule extends Macwire {
 
@@ -13,6 +12,8 @@ trait CoreModule extends Macwire {
   lazy val timetableDb = new TimetableDb(ztmDb("rozklady"))
 
   lazy val statsDb = new StatsDb(ztmDb("statystyki"))
+
+  lazy val infoDb = new InfoDb(ztmDb("informacje"))
 
   private def ztmDb(name: String) =
     Database.forURL(url = s"jdbc:mysql://${config.ztmDbHost}/$name",
