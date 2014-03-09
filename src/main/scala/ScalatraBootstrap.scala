@@ -4,7 +4,7 @@ import org.scalatra.{ScalatraServlet, LifeCycle}
 import pl.kodujdlapolski.ztm.common.ServletCompanion
 import pl.kodujdlapolski.ztm.common.web.SwaggerApiDoc
 import pl.kodujdlapolski.ztm.core.Beans
-import pl.kodujdlapolski.ztm.records.EngineVersionServlet
+import pl.kodujdlapolski.ztm.records.{MetroValidationsServlet, EngineVersionServlet}
 import pl.kodujdlapolski.ztm.web.PingServlet
 import scala.reflect.runtime._
 
@@ -26,6 +26,7 @@ class ScalatraBootstrap extends LifeCycle with Beans {
     val servlets = List(
       new PingServlet,
       new EngineVersionServlet(engineVersionProc, swagger),
+      new MetroValidationsServlet(metroValidationsProc, swagger),
       new SwaggerApiDoc(swagger)
     )
 

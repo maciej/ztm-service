@@ -7,7 +7,7 @@ import Database.dynamicSession
 
 import Stations.Station
 import org.joda.time.{DateTime, LocalDate}
-import pl.kodujdlapolski.ztm.common.ServletCompanion
+import pl.kodujdlapolski.ztm.common.{StatsDb, ServletCompanion}
 import java.sql.Date
 import com.typesafe.scalalogging.slf4j.Logging
 import org.scalatra.swagger.{SwaggerSupport, Swagger}
@@ -21,7 +21,7 @@ import pl.kodujdlapolski.ztm.common.dateformats.{NumericYearMonthDate, SqlDate}
 
 case class MetroValidations(timestamp: DateTime, count: Int)
 
-class MetroValidationsProc extends Logging {
+class MetroValidationsProc(db: StatsDb) extends Logging {
 
   type MVTuple = (Int, Date, Int, Int, Int)
 
@@ -31,15 +31,18 @@ class MetroValidationsProc extends Logging {
   def forStationOnDate(station: Station, date: LocalDate): List[MetroValidations] = {
     logger.info(s"Retrieving metro validations for stations $station on $date")
 
-    val q = sql"{CALL pobierz_metro_skasowania_minutowe(${station.id}, ${SqlDate.format(date)})}".as[MVTuple]
-    // TODO figure out how to avoid the map operation
-    q.list.map(e => tuple2MetroValidations(e))
+    db.withDynSession {
+      val q = sql"{CALL pobierz_metro_skasowania_minutowe(${station.id}, ${SqlDate.format(date)})}".as[MVTuple]
+      // TODO figure out how to avoid the map operation
+      q.list.map(e => tuple2MetroValidations(e))
+    }
   }
 }
 
-class MetroValidationsServlet(proc : MetroValidationsProc, val swagger : Swagger) extends JsonServlet {
+class MetroValidationsServlet(proc: MetroValidationsProc, val swagger: Swagger) extends JsonServlet 
+with MetroValidationsSwag {
 
-  get("/:stationId/:date") {
+  get("/:stationId/:date", operation(getOperation)) {
     proc.forStationOnDate(Stations(params("stationId").toInt),
       NumericYearMonthDate.parse(params("date")))
   }
@@ -49,10 +52,10 @@ object MetroValidationsServlet extends ServletCompanion {
   override val MappingPath: String = "metro-validations"
 }
 
-trait MetroValidationsServletSwaggerDefinition extends SwaggerSupport {
+trait MetroValidationsSwag extends SwaggerSupport {
   override protected def applicationName = Some(MetroValidationsServlet.MappingPath)
 
   override protected def applicationDescription = "Provides metro validations"
 
-
+  val getOperation = apiOperation[MetroValidations]("metroValidations").summary("returns metro validations")
 }
