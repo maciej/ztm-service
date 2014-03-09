@@ -57,5 +57,13 @@ trait MetroValidationsSwag extends SwaggerSupport {
 
   override protected def applicationDescription = "Provides metro validations"
 
-  val getOperation = apiOperation[MetroValidations]("metroValidations").summary("returns metro validations")
+  private val stationId = pathParam[Int]("stationId").description("Station ID").required
+
+  private val date = pathParam[DateTime]("date").description("Date").required
+
+  val getOperation = apiOperation[MetroValidations]("metroValidations")
+    .summary("returns metro validations")
+    .parameter(stationId)
+    .parameter(date)
+
 }
