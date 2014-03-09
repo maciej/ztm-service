@@ -6,6 +6,7 @@ import Q.interpolation
 import Database.dynamicSession
 import pl.kodujdlapolski.ztm.common.web.JsonServlet
 import pl.kodujdlapolski.ztm.common.{TimetableDb, ServletCompanion}
+import org.scalatra.swagger.{Swagger, SwaggerSupport}
 
 case class EngineVersion(value: String)
 
@@ -24,8 +25,10 @@ class EngineVersionProc(timetableDb: TimetableDb) {
 
 }
 
-class EngineVersionServlet(engineVersionProc: EngineVersionProc) extends JsonServlet {
-  get("/") {
+class EngineVersionServlet(engineVersionProc: EngineVersionProc, val swagger: Swagger) extends JsonServlet
+with EngineVersionServletSwaggerDefinition {
+
+  get("/", operation(getOperation)) {
     engineVersionProc.get()
   }
 
@@ -33,4 +36,12 @@ class EngineVersionServlet(engineVersionProc: EngineVersionProc) extends JsonSer
 
 object EngineVersionServlet extends ServletCompanion {
   override val MappingPath: String = "engine-version"
+}
+
+trait EngineVersionServletSwaggerDefinition extends SwaggerSupport {
+  override protected def applicationName = Some(EngineVersionServlet.MappingPath)
+
+  override protected def applicationDescription = "Provides ZTM engine version"
+
+  val getOperation = apiOperation[EngineVersion]("engineVersion").summary("returns engine version")
 }
