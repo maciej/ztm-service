@@ -10,7 +10,7 @@ import org.scalatra.swagger.{Swagger, SwaggerSupport}
 
 case class EngineVersion(value: String)
 
-class EngineVersionProc(timetableDb: TimetableDb) {
+class EngineVersionProc(db: TimetableDb) {
 
   implicit def tuple2EngineVersion(tuple: (String, String)) = EngineVersion(tuple._2)
 
@@ -18,7 +18,7 @@ class EngineVersionProc(timetableDb: TimetableDb) {
 
   // http://blog.lunatech.com/2013/11/21/slick-case-classes
   def get(): EngineVersion = {
-    timetableDb.withDynSession {
+    db.withDynSession {
       query().first()
     }
   }
@@ -26,7 +26,7 @@ class EngineVersionProc(timetableDb: TimetableDb) {
 }
 
 class EngineVersionServlet(engineVersionProc: EngineVersionProc, val swagger: Swagger) extends JsonServlet
-with EngineVersionServletSwaggerDefinition {
+with EngineVersionSwag {
 
   get("/", operation(getOperation)) {
     engineVersionProc.get()
@@ -38,7 +38,7 @@ object EngineVersionServlet extends ServletCompanion {
   override val MappingPath: String = "engine-version"
 }
 
-trait EngineVersionServletSwaggerDefinition extends SwaggerSupport {
+trait EngineVersionSwag extends SwaggerSupport {
   override protected def applicationName = Some(EngineVersionServlet.MappingPath)
 
   override protected def applicationDescription = "Provides ZTM engine version"
