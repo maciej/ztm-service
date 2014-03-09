@@ -70,6 +70,7 @@ trait VehicleLocationsSwag extends SwaggerSupport {
   override protected def applicationName = Some(VehicleLocationsServlet.MappingPath)
   override protected def applicationDescription = "Vehicle locations"
 
+  // Why "String" is returned here https://github.com/scalatra/scalatra/issues/343
   val getOperation = apiOperation[String]("vehicleLocations")
     .summary("returns vehicle locations")
 }
