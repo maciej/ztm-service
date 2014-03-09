@@ -19,16 +19,16 @@ import pl.kodujdlapolski.ztm.common.dateformats.{NumericYearMonthDate, SqlDate}
  *  Przykład wywołania: call pobierz_metro_skasowania_minutowe (23, curdate());
  */
 
-case class MetroValidations(timestamp: DateTime, count: Int)
+case class MetroValidation(timestamp: DateTime, count: Int)
 
 class MetroValidationsProc(db: StatsDb) extends Logging {
 
   type MVTuple = (Int, Date, Int, Int, Int)
 
-  implicit def tuple2MetroValidations(tuple: MVTuple) = MetroValidations(
+  implicit def tuple2MetroValidations(tuple: MVTuple) = MetroValidation(
     new DateTime(tuple._2).withHourOfDay(tuple._3).withMinuteOfHour(tuple._4), tuple._5)
 
-  def forStationOnDate(station: Station, date: LocalDate): List[MetroValidations] = {
+  def forStationOnDate(station: Station, date: LocalDate): List[MetroValidation] = {
     logger.info(s"Retrieving metro validations for stations $station on $date")
 
     db.withDynSession {
@@ -61,7 +61,7 @@ trait MetroValidationsSwag extends SwaggerSupport {
 
   private val date = pathParam[DateTime]("date").description("Date").required
 
-  val getOperation = apiOperation[MetroValidations]("metroValidations")
+  val getOperation = apiOperation[MetroValidation]("metroValidations")
     .summary("returns metro validations")
     .parameter(stationId)
     .parameter(date)
