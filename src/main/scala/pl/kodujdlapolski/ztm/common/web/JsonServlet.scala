@@ -6,7 +6,7 @@ import org.json4s.{DefaultFormats, Formats}
 import javax.servlet.http.HttpServletResponse
 import java.util.Date
 
-class JsonServlet extends ScalatraServlet with JacksonJsonSupport with JValueResult {
+class JsonServlet extends ScalatraServlet with JacksonJsonSupport {
 
   protected implicit val jsonFormats: Formats = DefaultFormats ++ org.json4s.ext.JodaTimeSerializers.all
 
