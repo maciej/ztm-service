@@ -55,7 +55,7 @@ object MetroValidationsServlet extends ServletCompanion {
 trait MetroValidationsSwag extends SwaggerSupport {
   override protected def applicationName = Some(MetroValidationsServlet.MappingPath)
 
-  override protected def applicationDescription = "Provides metro validations"
+  override protected def applicationDescription = "Metro validations"
 
   private val stationId = pathParam[Int]("stationId").description("Station ID").required
 

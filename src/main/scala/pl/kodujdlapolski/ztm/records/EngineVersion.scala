@@ -41,7 +41,7 @@ object EngineVersionServlet extends ServletCompanion {
 trait EngineVersionSwag extends SwaggerSupport {
   override protected def applicationName = Some(EngineVersionServlet.MappingPath)
 
-  override protected def applicationDescription = "Provides ZTM engine version"
+  override protected def applicationDescription = "ZTM MySQL db version"
 
   val getOperation = apiOperation[EngineVersion]("engineVersion").summary("returns engine version")
 }
