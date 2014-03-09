@@ -1,8 +1,7 @@
 package pl.kodujdlapolski.ztm.sandbox
 
-import pl.kodujdlapolski.ztm.config.CoreConfig
 
-import pl.kodujdlapolski.ztm.core.Beans
+import pl.kodujdlapolski.ztm.core.{CoreConfig, Beans}
 import pl.kodujdlapolski.ztm.common.DatabaseWrapper
 
 import pl.kodujdlapolski.ztm.records.{Stations, MetroValidationsProc, EngineVersionProc}
