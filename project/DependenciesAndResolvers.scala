@@ -16,9 +16,12 @@ object Dependencies {
     "com.softwaremill.macwire" %% "runtime" % "0.5"
   )
 
+  val slf4jVersion = "1.7.6"
   val logging = Seq(
-    "org.slf4j" % "slf4j-simple" % "1.7.6",
-    "com.typesafe" %% "scalalogging-slf4j" % "1.0.1"
+    "org.slf4j" % "slf4j-api" % slf4jVersion,
+    "org.slf4j" % "log4j-over-slf4j" % slf4jVersion,
+    "ch.qos.logback" % "logback-classic" % "1.1.1",
+    "com.typesafe" %% "scalalogging-slf4j" % "1.1.0"
   )
 
   val scalatraVersion = "2.2.2"
