@@ -26,13 +26,7 @@ object ZtmBuild extends Build {
       mainClass in assembly := Some("pl.kodujdlapolski.ztm.ZtmWeb")
     ) ++ assemblySettings ++ ScalatraPlugin.scalatraSettings
 
-  lazy val commonDependencies = Seq(
-    "org.scalatest" %% "scalatest" % "2.0" % "test",
-    "com.typesafe.slick" %% "slick" % "2.0.0-RC1",
-    "mysql" % "mysql-connector-java" % "5.1.28",
-    "com.typesafe" % "config" % "1.0.2",
-    "org.mockito" % "mockito-core" % "1.9.5"
-  ) ++ jodaTime ++ macwire ++ logging ++ httpStack
+  lazy val commonDependencies = baseDependencies ++ jodaTime ++ macwire ++ logging ++ httpStack ++ mongodbStack ++ akka
 
   lazy val root = Project(
     id = "ztm-service",

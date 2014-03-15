@@ -5,6 +5,13 @@ object Resolvers {
 }
 
 object Dependencies {
+  val baseDependencies = Seq(
+    "org.scalatest" %% "scalatest" % "2.0" % "test",
+    "com.typesafe.slick" %% "slick" % "2.0.0-RC1",
+    "mysql" % "mysql-connector-java" % "5.1.28",
+    "com.typesafe" % "config" % "1.0.2",
+    "org.mockito" % "mockito-core" % "1.9.5"
+  )
 
   // See http://stackoverflow.com/questions/13856266/class-broken-error-with-joda-time-using-scala
   val jodaTime = Seq(
@@ -43,5 +50,23 @@ object Dependencies {
     servletApi,
     json4s
   )
+
+  /* Mongo, Lift-Record, Rogue, Casbah */
+  val bson = "com.mongodb" % "bson" % "2.7.1" % "provided"
+  val casbah = "org.mongodb" %% "casbah" % "2.6.3"
+  val rogueVersion = "2.2.0"
+  val mongodbStack = Seq(
+    "com.foursquare" %% "rogue-core" % rogueVersion intransitive(),
+    "com.foursquare" %% "rogue-field" % rogueVersion intransitive(),
+    "com.foursquare" %% "rogue-lift" % rogueVersion intransitive(),
+    "com.foursquare" %% "rogue-index" % rogueVersion intransitive(),
+    "net.liftweb" %% "lift-mongodb-record" % "2.5.1") ++ Seq(
+    bson, casbah
+  )
+
+  val akkaVersion = "2.3.0"
+  val akkaActors = "com.typesafe.akka" %% "akka-actor" % akkaVersion force()
+  val akkaTestKit = "com.typesafe.akka" %% "akka-testkit" % akkaVersion % "test" force()
+  val akka = Seq(akkaActors, akkaTestKit)
 
 }
