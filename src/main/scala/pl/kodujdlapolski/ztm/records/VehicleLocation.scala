@@ -29,14 +29,14 @@ import pl.kodujdlapolski.ztm.common.web.JsonServlet
  * Important implementation note: cutoff requests that are asking for data >21min old
  */
 
-case class VehicleLocation(vehicleType: VehicleType, taborowy: Int, line: Int, brigade: Int,
+case class VehicleLocation(vehicleType: VehicleType, taborowy: Int, line: String, brigade: Int,
                            latitude: Float, longitude: Float, lastUpdate: DateTime)
 
 class VehicleLocationsProc(db: InfoDb) extends Logging {
 
   val WarsawDateTimeZone = DateTimeZone.forID("Europe/Warsaw")
 
-  type VLTuple = (String, Int, Int, Int, Float, Float, Date)
+  type VLTuple = (String, Int, String, Int, Float, Float, Date)
 
   private def tuple2VehicleLocations(tuple: VLTuple) = VehicleLocation(
     VehicleTypes.withName(tuple._1), tuple._2, tuple._3, tuple._4, tuple._5, tuple._6, new DateTime(tuple._7, WarsawDateTimeZone)
