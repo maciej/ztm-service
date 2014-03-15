@@ -53,11 +53,21 @@ class VehicleLocationsProc(db: InfoDb) extends Logging {
   }
 }
 
+object VehicleLocationFilters {
+  val InvalidLine = {
+    location: VehicleLocation =>
+    location.line.trim == "0"
+  }
+
+  val OnlyValid = InvalidLine.andThen(!_)
+
+}
+
 class VehicleLocationsServlet(proc: VehicleLocationsProc, val swagger: Swagger) extends JsonServlet
 with VehicleLocationsSwag {
 
   get("/", operation(getOperation)) {
-    proc.latestSince(DateTime.now().minusMinutes(5))
+    proc.latestSince(DateTime.now().minusMinutes(5)).filter(VehicleLocationFilters.OnlyValid)
   }
 }
 
@@ -68,6 +78,7 @@ object VehicleLocationsServlet extends ServletCompanion {
 trait VehicleLocationsSwag extends SwaggerSupport {
 
   override protected def applicationName = Some(VehicleLocationsServlet.MappingPath)
+
   override protected def applicationDescription = "Vehicle locations"
 
   // Why "String" is returned here https://github.com/scalatra/scalatra/issues/343

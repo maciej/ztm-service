@@ -1,6 +1,6 @@
 package pl.kodujdlapolski.ztm.records
 
-import org.scalatest.{FlatSpec, BeforeAndAfterEach, ShouldMatchers}
+import org.scalatest.{BeforeAndAfterEach, ShouldMatchers}
 import org.scalatest.mock.MockitoSugar
 import org.mockito.Mockito._
 import org.scalatra.swagger.Swagger
