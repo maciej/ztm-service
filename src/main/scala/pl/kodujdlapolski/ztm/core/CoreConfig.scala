@@ -13,7 +13,13 @@ trait ZtmConfig {
   lazy val ztmDbPassword = rootConfig.getString(s"$ZtmMysql.password")
 }
 
-class CoreConfig extends ZtmConfig with WebServerConfig {
+trait ScrapperConfig {
+  def rootConfig: Config
+
+  lazy val scrapperStartFromWebApp = rootConfig.getBoolean("scrapper.start-from-web-app")
+}
+
+class CoreConfig extends ZtmConfig with WebServerConfig with ScrapperConfig {
   def rootConfig = ConfigFactory.load().withFallback(ConfigFactory.load("pl/kodujdlapolski/ztm/defaults.conf"))
 
 }

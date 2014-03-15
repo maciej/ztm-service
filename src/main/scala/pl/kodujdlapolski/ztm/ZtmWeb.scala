@@ -5,11 +5,16 @@ import java.net.InetSocketAddress
 import org.eclipse.jetty.server.Server
 import org.eclipse.jetty.webapp.WebAppContext
 import pl.kodujdlapolski.ztm.core.{Beans, CoreModule, WebServerConfig}
+import pl.kodujdlapolski.ztm.scrapper.ScrapperActivator
 
 object ZtmWeb extends App with Logging {
   val beans = Beans
+
   private val jetty = new EmbeddedJetty(CoreModule.config, Map("beans" -> beans))
   jetty.startJetty()
+
+  if (beans.config.scrapperStartFromWebApp)
+    new ScrapperActivator(beans).init()
 }
 
 class EmbeddedJetty(config: WebServerConfig, contextAttributes: Map[String, AnyRef] = Map()) {
