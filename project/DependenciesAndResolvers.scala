@@ -24,6 +24,7 @@ object Dependencies {
   val scalatraVersion = "2.2.2"
   val swaggerVersion = "1.3.2"
   val json4s = "org.json4s" %% "json4s-jackson" % "3.1.0"
+  val jettyVersion = "8.1.8.v20121106"
   /* The container scope requires the scalatra plugin */
   val servletApi = "org.eclipse.jetty.orbit" % "javax.servlet" % "3.0.0.v201112011016" %
     "container;provided;test" artifacts Artifact("javax.servlet", "jar", "jar")
@@ -34,7 +35,8 @@ object Dependencies {
     "org.scalatra" %% "scalatra-json" % scalatraVersion,
     "com.wordnik" %% "swagger-project" % swaggerVersion,
     "org.scalatra" %% "scalatra-swagger" % scalatraVersion,
-    "org.eclipse.jetty" % "jetty-webapp" % "8.1.8.v20121106" % "container",
+    "org.eclipse.jetty" % "jetty-webapp" % jettyVersion,
+    "org.eclipse.jetty" % "jetty-webapp" % jettyVersion % "container",
     servletApi,
     json4s
   )
