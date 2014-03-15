@@ -10,7 +10,7 @@ import scala.slick.jdbc.{StaticQuery => Q}
 import Q.interpolation
 import Database.dynamicSession
 import pl.kodujdlapolski.ztm.common.dateformats.SqlDateTime
-import java.sql.Date
+import java.sql.Timestamp
 import org.scalatra.swagger.{SwaggerSupport, Swagger}
 import pl.kodujdlapolski.ztm.common.web.JsonServlet
 
@@ -36,11 +36,13 @@ class VehicleLocationsProc(db: InfoDb) extends Logging {
 
   val WarsawDateTimeZone = DateTimeZone.forID("Europe/Warsaw")
 
-  type VLTuple = (String, String, String, String, Float, Float, Date)
+  type VLTuple = (String, String, String, String, Float, Float, Timestamp)
 
-  private def tuple2VehicleLocations(tuple: VLTuple) = VehicleLocation(
-    VehicleTypes.withName(tuple._1), tuple._2, tuple._3, tuple._4, tuple._5, tuple._6, new DateTime(tuple._7, WarsawDateTimeZone)
-  )
+  private def tuple2VehicleLocations(tuple: VLTuple) = {
+    VehicleLocation(
+      VehicleTypes.withName(tuple._1), tuple._2, tuple._3, tuple._4, tuple._5, tuple._6, new DateTime(tuple._7, WarsawDateTimeZone)
+    )
+  }
 
   def latestSince(date: DateTime): List[VehicleLocation] = {
     db.withDynSession {
@@ -67,7 +69,7 @@ class VehicleLocationsServlet(proc: VehicleLocationsProc, val swagger: Swagger) 
 with VehicleLocationsSwag {
 
   get("/", operation(getOperation)) {
-    proc.latestSince(DateTime.now().minusMinutes(5)).filter(VehicleLocationFilters.OnlyValid)
+    proc.latestSince(DateTime.now().minusMinutes(10)).filter(VehicleLocationFilters.OnlyValid)
   }
 }
 
