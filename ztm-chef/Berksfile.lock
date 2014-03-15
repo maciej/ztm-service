@@ -3,6 +3,9 @@
     "java": {
       "locked_version": "1.16.0"
     },
+    "ntp": {
+      "locked_version": "1.5.0"
+    },
     "windows": {
       "locked_version": "1.11.0"
     },

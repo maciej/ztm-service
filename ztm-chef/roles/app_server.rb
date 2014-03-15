@@ -1,8 +1,9 @@
 name 'app_server'
 description 'Application server'
 
-run_list [ 
-  'recipe[java]' 
+run_list [
+  'role[base]',
+  'recipe[java]'
 ]
 
 default_attributes({
