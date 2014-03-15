@@ -8,7 +8,7 @@ import pl.kodujdlapolski.ztm.records.{MetroValidationsServlet, EngineVersionServ
 import pl.kodujdlapolski.ztm.web.{VehicleLocationsServlet, PingServlet}
 import scala.reflect.runtime._
 
-class ScalatraBootstrap extends LifeCycle with Beans {
+class ScalatraBootstrap extends LifeCycle {
 
   val Prefix = "/api/1.0/"
 
@@ -21,14 +21,16 @@ class ScalatraBootstrap extends LifeCycle with Beans {
   }
 
   override def init(context: ServletContext) {
+    val beans = Option(context.getAttribute("beans").asInstanceOf[Beans]).orElse(Some(Beans)).get
+
     context.setInitParameter("org.eclipse.jetty.servlet.Default.dirAllowed", "false");
 
     val servlets = List(
       new PingServlet,
-      new EngineVersionServlet(engineVersionProc, swagger),
-      new MetroValidationsServlet(metroValidationsProc, swagger),
-      new VehicleLocationsServlet(vehicleLocationsProc, swagger),
-      new SwaggerApiDoc(swagger)
+      new EngineVersionServlet(beans.engineVersionProc, beans.swagger),
+      new MetroValidationsServlet(beans.metroValidationsProc, beans.swagger),
+      new VehicleLocationsServlet(beans.vehicleLocationsProc, beans.swagger),
+      new SwaggerApiDoc(beans.swagger)
     )
 
     for (servlet <- servlets)
