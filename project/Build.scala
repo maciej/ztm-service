@@ -4,6 +4,7 @@ import sbtassembly.Plugin.assemblySettings
 import sbtassembly.Plugin.AssemblyKeys._
 import Dependencies._
 import org.scalatra.sbt._
+import com.earldouglas.xsbtwebplugin.PluginKeys.webappResources
 
 object ZtmBuild extends Build {
   //  override lazy val settings = super.settings
@@ -49,7 +50,8 @@ object ZtmBuild extends Build {
        */
       unmanagedResourceDirectories in Compile <++= baseDirectory { base =>
         Seq( base / "web" )
-      }
+      },
+      webappResources in Compile := Seq(baseDirectory.value / "web" / "webapp")
     )
 
 }
