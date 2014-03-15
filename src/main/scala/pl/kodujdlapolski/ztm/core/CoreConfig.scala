@@ -1,17 +1,23 @@
 package pl.kodujdlapolski.ztm.core
 
-import com.typesafe.config.ConfigFactory
+import com.typesafe.config.{Config, ConfigFactory}
 
-class CoreConfig {
-  import CoreConfig._
+trait ZtmConfig {
 
-  def rootConfig = ConfigFactory.load().withFallback(ConfigFactory.load("pl/kodujdlapolski/ztm/defaults.conf"))
+  import ZtmConfig._
+
+  def rootConfig: Config
 
   lazy val ztmDbHost = rootConfig.getString(s"$ZtmMysql.host")
   lazy val ztmDbUsername = rootConfig.getString(s"$ZtmMysql.username")
   lazy val ztmDbPassword = rootConfig.getString(s"$ZtmMysql.password")
 }
 
-object CoreConfig {
+class CoreConfig extends ZtmConfig with WebServerConfig {
+  def rootConfig = ConfigFactory.load().withFallback(ConfigFactory.load("pl/kodujdlapolski/ztm/defaults.conf"))
+
+}
+
+object ZtmConfig {
   private val ZtmMysql = "ztm-mysql"
 }
