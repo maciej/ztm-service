@@ -2,3 +2,5 @@ site :opscode
 
 cookbook 'java'
 cookbook 'ntp'
+
+cookbook 'mongodb', github: 'edelight/chef-mongodb'

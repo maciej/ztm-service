@@ -6,6 +6,11 @@
     "ntp": {
       "locked_version": "1.5.0"
     },
+    "mongodb": {
+      "locked_version": "0.15.0",
+      "git": "git://github.com/edelight/chef-mongodb.git",
+      "ref": "d2586717e7fde4e8807767298bbc48f4fbda2308"
+    },
     "windows": {
       "locked_version": "1.11.0"
     },
@@ -14,6 +19,24 @@
     },
     "aws": {
       "locked_version": "1.0.0"
+    },
+    "apt": {
+      "locked_version": "2.3.0"
+    },
+    "python": {
+      "locked_version": "1.4.6"
+    },
+    "build-essential": {
+      "locked_version": "1.4.4"
+    },
+    "yum-epel": {
+      "locked_version": "0.3.4"
+    },
+    "yum": {
+      "locked_version": "3.1.2"
+    },
+    "runit": {
+      "locked_version": "1.5.10"
     }
   }
 }
