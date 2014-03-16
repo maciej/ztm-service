@@ -7,9 +7,8 @@ import pl.kodujdlapolski.ztm.records.{VehicleLocation, VehicleTypes}
 import com.foursquare.rogue.LatLong
 import com.softwaremill.thegarden.mongodb.field.DateField
 import com.softwaremill.thegarden.mongodb.MongodbIndexProvider
-import org.bson.BasicBSONObject
-import com.mongodb.casbah.query.dsl.BSONType
-import com.mongodb.casbah.commons.MongoDBObject
+import org.joda.time.Minutes.{minutes}
+import org.joda.time.{Minutes, DateTime}
 
 /*
  * While working on this source file I found this:
@@ -42,6 +41,8 @@ object VehicleLocationRecord extends VehicleLocationRecord with MongoMetaRecord[
 
   override val collectionName = "vehicle_locations"
 
+  val FutureLocationsEpsilon: Minutes = minutes(5)
+
   def fromEntity(entity: VehicleLocation) = VehicleLocationConverters.toRecord(entity)
 
   override def ensureIndexes() = {
@@ -63,6 +64,11 @@ object VehicleLocationRecord extends VehicleLocationRecord with MongoMetaRecord[
       brigade.name -> location.brigade
     )
     upsert(query, new DBObject(query) ++ updateClause)
+  }
+
+  def findFutureLocations(): Stream[VehicleLocation] = {
+    import com.foursquare.rogue.LiftRogue._
+    this.query.where(_.updatedAt after new DateTime().plus(FutureLocationsEpsilon)).fetch().toStream.map(_.toEntity)
   }
 }
 
