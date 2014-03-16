@@ -3,8 +3,9 @@ package pl.kodujdlapolski.ztm.mongodb
 import org.scalatest.{BeforeAndAfterEach, ShouldMatchers, FlatSpec}
 import pl.kodujdlapolski.ztm.records.VehicleLocationRepository
 import org.joda.time.DateTime
+import com.softwaremill.thegarden.mongodbtest.FongoSupport
 
-class VehicleLocationRecordSpec extends FlatSpec with FongoSupport with ShouldMatchers  with BeforeAndAfterEach {
+class VehicleLocationRecordSpec extends FlatSpec with FongoSupport with ShouldMatchers with BeforeAndAfterEach {
 
   import VehicleLocationRepository._
   import VehicleLocationRecord.FutureLocationsEpsilon
@@ -13,15 +14,7 @@ class VehicleLocationRecordSpec extends FlatSpec with FongoSupport with ShouldMa
 
   val findFutureLocations = s"$className.findFutureLocations"
 
-  def dropCollection() {
-    VehicleLocationRecord.drop
-    assert(VehicleLocationRecord.count == 0)
-  }
-
-  override protected def beforeEach() = {
-    super.beforeEach()
-    dropCollection()
-  }
+  override val clearDataBeforeEachTest = true
 
   it should "be persistable" in {
     val countBeforeSave = VehicleLocationRecord.count
@@ -66,11 +59,11 @@ class VehicleLocationRecordSpec extends FlatSpec with FongoSupport with ShouldMa
 
     // Then
     try {
-    locations.isEmpty should be(true)
+      locations.isEmpty should be(true)
     } catch {
       case e: Exception =>
-      Console.err.println(s"Future locations count ${locations.size}")
-      throw e
+        Console.err.println(s"Future locations count ${locations.size}")
+        throw e
     }
   }
 
@@ -97,5 +90,4 @@ class VehicleLocationRecordSpec extends FlatSpec with FongoSupport with ShouldMa
     // Then
     locations.isEmpty should be(false)
   }
-
 }
