@@ -1,9 +1,10 @@
 package pl.kodujdlapolski.ztm.records
 
 import VehicleTypes.VehicleType
-import org.joda.time.{DateTimeZone, DateTime}
+import org.joda.time.{Minutes, DateTimeZone, DateTime}
 import pl.kodujdlapolski.ztm.common.InfoDb
 import com.typesafe.scalalogging.slf4j.Logging
+import org.joda.time.Minutes.minutes
 
 import scala.slick.driver.JdbcDriver.backend.Database
 import scala.slick.jdbc.{StaticQuery => Q}
@@ -53,6 +54,19 @@ class VehicleLocationsProc(db: InfoDb) extends Logging {
   }
 }
 
+class VehicleLocationsProcProxy(proc: VehicleLocationsProc) {
+
+  import VehicleLocationsProcProxy._
+
+  def latestValidData() = proc.latestSince(DateTime.now().minus(LatestDataInterval))
+    .filter(VehicleLocationFilters.OnlyValid)
+
+}
+
+object VehicleLocationsProcProxy {
+  val LatestDataInterval = minutes(10)
+}
+
 object VehicleLocationFilters {
   val InvalidLine = {
     location: VehicleLocation =>
@@ -62,5 +76,3 @@ object VehicleLocationFilters {
   val OnlyValid = InvalidLine.andThen(!_)
 
 }
-
-

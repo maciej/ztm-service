@@ -2,6 +2,7 @@ package pl.kodujdlapolski.ztm.scrapper
 
 import akka.actor.{Props, Actor}
 import pl.kodujdlapolski.ztm.core.Beans
+import pl.kodujdlapolski.ztm.scrapper.scrappers.VehicleLocationScrapper
 
 class ScrapperSupervisor(beans: Beans) extends Actor {
   @throws(classOf[Exception])
@@ -10,7 +11,7 @@ class ScrapperSupervisor(beans: Beans) extends Actor {
 
     val system = context.system
 
-    val vehicleLocationScrapper = system.actorOf(Props(classOf[VehicleLocationScrapper], beans.vehicleLocationsProc))
+    val vehicleLocationScrapper = system.actorOf(Props(classOf[VehicleLocationScrapper], beans.vehicleLocationsProcProxy))
 
     import system.dispatcher
 

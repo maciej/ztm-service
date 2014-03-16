@@ -23,6 +23,9 @@ object ZtmBuild extends Build {
   // http://grokbase.com/t/gg/simple-build-tool/132336h2nz/sbt-help-with-scopes-and-undefined-setting-error
   lazy val commonSettings = Defaults.defaultSettings ++ Seq(isSnapshot <<= isSnapshot or version(_ endsWith "-SNAPSHOT")) ++ slf4jExclusionHack ++
     Seq(
+      resolvers ++= Resolvers.customResolvers
+    ) ++
+    Seq(
       mainClass in assembly := Some("pl.kodujdlapolski.ztm.ZtmWeb")
     ) ++ assemblySettings ++ ScalatraPlugin.scalatraSettings
 
@@ -42,8 +45,9 @@ object ZtmBuild extends Build {
        * http://www.scala-sbt.org/release/docs/Detailed-Topics/Paths.html
        * http://www.scala-sbt.org/release/docs/Detailed-Topics/Mapping-Files.html
        */
-      unmanagedResourceDirectories in Compile <++= baseDirectory { base =>
-        Seq( base / "web" )
+      unmanagedResourceDirectories in Compile <++= baseDirectory {
+        base =>
+          Seq(base / "web")
       },
       webappResources in Compile := Seq(baseDirectory.value / "web" / "webapp")
     )

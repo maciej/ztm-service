@@ -1,7 +1,9 @@
 import sbt._
 
 object Resolvers {
-
+  val customResolvers = Seq(
+    "SoftwareMill Public Releases" at "https://nexus.softwaremill.com/content/repositories/releases/"
+  )
 }
 
 object Dependencies {
@@ -10,7 +12,7 @@ object Dependencies {
     "com.typesafe.slick" %% "slick" % "2.0.0-RC1",
     "mysql" % "mysql-connector-java" % "5.1.28",
     "com.typesafe" % "config" % "1.0.2",
-    "org.mockito" % "mockito-core" % "1.9.5"
+    "org.mockito" % "mockito-core" % "1.9.5" % "test"
   )
 
   // See http://stackoverflow.com/questions/13856266/class-broken-error-with-joda-time-using-scala
@@ -52,16 +54,19 @@ object Dependencies {
   )
 
   /* Mongo, Lift-Record, Rogue, Casbah */
-  val bson = "com.mongodb" % "bson" % "2.7.1" % "provided"
-  val casbah = "org.mongodb" %% "casbah" % "2.6.3"
+  val casbah = "org.mongodb" %% "casbah" % "2.6.5" exclude(org = "org.scala-lang", name = "scala-library")
   val rogueVersion = "2.2.0"
+  val gardenVersion = "0.0.1"
   val mongodbStack = Seq(
     "com.foursquare" %% "rogue-core" % rogueVersion intransitive(),
     "com.foursquare" %% "rogue-field" % rogueVersion intransitive(),
     "com.foursquare" %% "rogue-lift" % rogueVersion intransitive(),
     "com.foursquare" %% "rogue-index" % rogueVersion intransitive(),
-    "net.liftweb" %% "lift-mongodb-record" % "2.5.1") ++ Seq(
-    bson, casbah
+    "net.liftweb" %% "lift-mongodb-record" % "2.5.1",
+    "com.github.fakemongo" % "fongo" % "1.3.7" % "test",
+    "com.softwaremill.thegarden" %% "mongodb" % "0.0.1"
+  ) ++ Seq(
+    casbah
   )
 
   val akkaVersion = "2.3.0"
