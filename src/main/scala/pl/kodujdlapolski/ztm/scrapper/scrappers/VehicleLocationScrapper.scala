@@ -9,6 +9,7 @@ class VehicleLocationScrapper(proxy : VehicleLocationsProcProxy) extends Actor {
 
   override def receive = {
     case ScrapCommand =>
+      proxy.latestValidData()
 
   }
 }

@@ -6,6 +6,10 @@ import net.liftweb.record.field.{StringField, EnumField}
 import pl.kodujdlapolski.ztm.records.{VehicleLocation, VehicleTypes}
 import com.foursquare.rogue.LatLong
 import com.softwaremill.thegarden.mongodb.field.DateField
+import com.softwaremill.thegarden.mongodb.MongodbIndexProvider
+import org.bson.BasicBSONObject
+import com.mongodb.casbah.query.dsl.BSONType
+import com.mongodb.casbah.commons.MongoDBObject
 
 /*
  * While working on this source file I found this:
@@ -15,6 +19,7 @@ import com.softwaremill.thegarden.mongodb.field.DateField
 class VehicleLocationRecord extends MongoRecord[VehicleLocationRecord] with ObjectIdPk[VehicleLocationRecord] {
   override def meta = VehicleLocationRecord
 
+  /* Elements */
   object vehicleType extends EnumField(this, VehicleTypes)
 
   object loc extends MongoCaseClassField[VehicleLocationRecord, LatLong](this)
@@ -23,19 +28,42 @@ class VehicleLocationRecord extends MongoRecord[VehicleLocationRecord] with Obje
 
   object line extends StringField(this, maxLength = 20)
 
+  /* Numer boczny */
   object train extends StringField(this, maxLength = 20)
 
   object updatedAt extends DateField(this)
 
+  /* End of elements */
 
   def toEntity = VehicleLocationConverters.toEntity(this)
 }
 
-object VehicleLocationRecord extends VehicleLocationRecord with MongoMetaRecord[VehicleLocationRecord] {
+object VehicleLocationRecord extends VehicleLocationRecord with MongoMetaRecord[VehicleLocationRecord] with MongodbIndexProvider {
 
   override val collectionName = "vehicle_locations"
 
-  def toRecord(entity: VehicleLocation) = VehicleLocationConverters.toRecord(entity)
+  def fromEntity(entity: VehicleLocation) = VehicleLocationConverters.toRecord(entity)
+
+  override def ensureIndexes() = {
+    import net.liftweb.json.JsonDSL._
+    ensureIndex((vehicleType.name -> 1) ~ (train.name -> 1) ~ (updatedAt.name -> 1),
+      "unique" -> 1)
+  }
+
+  def addUpdate(location: VehicleLocation) = {
+    import com.mongodb.casbah.commons.{MongoDBObject => DBObject}
+    val query = DBObject(
+      vehicleType.name -> location.vehicleType.id,
+      train.name -> location.train,
+      updatedAt.name -> location.lastUpdate.toDate
+    )
+    val updateClause = DBObject(
+      line.name -> location.line,
+      loc.name -> DBObject("lat" -> location.loc.lat, "long" -> location.loc.long),
+      brigade.name -> location.brigade
+    )
+    upsert(query, new DBObject(query) ++ updateClause)
+  }
 }
 
 private[mongodb] object VehicleLocationConverters {

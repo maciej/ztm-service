@@ -56,7 +56,7 @@ object Dependencies {
   /* Mongo, Lift-Record, Rogue, Casbah */
   val casbah = "org.mongodb" %% "casbah" % "2.6.5" exclude(org = "org.scala-lang", name = "scala-library")
   val rogueVersion = "2.2.0"
-  val gardenVersion = "0.0.1"
+  val gardenVersion = "0.0.2"
   val mongodbStack = Seq(
     "com.foursquare" %% "rogue-core" % rogueVersion intransitive(),
     "com.foursquare" %% "rogue-field" % rogueVersion intransitive(),
@@ -64,7 +64,7 @@ object Dependencies {
     "com.foursquare" %% "rogue-index" % rogueVersion intransitive(),
     "net.liftweb" %% "lift-mongodb-record" % "2.5.1",
     "com.github.fakemongo" % "fongo" % "1.3.7" % "test",
-    "com.softwaremill.thegarden" %% "mongodb" % "0.0.1"
+    "com.softwaremill.thegarden" %% "mongodb" % gardenVersion
   ) ++ Seq(
     casbah
   )

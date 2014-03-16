@@ -1,7 +1,7 @@
 package pl.kodujdlapolski.ztm.records
 
 import VehicleTypes.VehicleType
-import org.joda.time.{Minutes, DateTimeZone, DateTime}
+import org.joda.time.{DateTimeZone, DateTime}
 import pl.kodujdlapolski.ztm.common.InfoDb
 import com.typesafe.scalalogging.slf4j.Logging
 import org.joda.time.Minutes.minutes
@@ -12,6 +12,7 @@ import Q.interpolation
 import Database.dynamicSession
 import pl.kodujdlapolski.ztm.common.dateformats.SqlDateTime
 import java.sql.Timestamp
+import com.foursquare.rogue.LatLong
 
 /*
  * Params:
@@ -29,7 +30,12 @@ import java.sql.Timestamp
  */
 
 case class VehicleLocation(vehicleType: VehicleType, taborowy: String, line: String, brigade: String,
-                           latitude: Float, longitude: Float, lastUpdate: DateTime)
+                           latitude: Float, longitude: Float, lastUpdate: DateTime) {
+
+  def loc = LatLong(latitude, longitude)
+
+  def train = taborowy
+}
 
 class VehicleLocationsProc(db: InfoDb) extends Logging {
 

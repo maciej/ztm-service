@@ -19,7 +19,15 @@ trait ScrapperConfig {
   lazy val scrapperStartFromWebApp = rootConfig.getBoolean("scrapper.start-from-web-app")
 }
 
-class CoreConfig extends ZtmConfig with WebServerConfig with ScrapperConfig {
+trait MongodbConfig {
+  def rootConfig: Config
+
+  lazy val mongoServers = rootConfig.getString("mongodb.servers")
+  lazy val mongoDatabase = rootConfig.getString("mongodb.database")
+  lazy val ensureIndexes = rootConfig.getBoolean("mongodb.ensure-indexes")
+}
+
+class CoreConfig extends ZtmConfig with WebServerConfig with ScrapperConfig with MongodbConfig {
   def rootConfig = ConfigFactory.load().withFallback(ConfigFactory.load("pl/kodujdlapolski/ztm/defaults.conf"))
 
 }
