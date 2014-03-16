@@ -74,11 +74,22 @@ object VehicleLocationsProcProxy {
 }
 
 object VehicleLocationFilters {
+
+  import pl.kodujdlapolski.ztm.mongodb.VehicleLocationRecord.FutureLocationsEpsilon
+
   val InvalidLine = {
     location: VehicleLocation =>
       location.line.trim == "0"
   }
 
-  val OnlyValid = InvalidLine.andThen(!_)
+  val FutureLocations = {
+    location: VehicleLocation =>
+      location.lastUpdate.isAfter(new DateTime().plus(FutureLocationsEpsilon))
+  }
+
+  val OnlyValid = {
+    location: VehicleLocation =>
+      !InvalidLine(location) && !FutureLocations(location)
+  }
 
 }
