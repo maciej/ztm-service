@@ -1,11 +1,11 @@
 
 import javax.servlet.ServletContext
 import org.scalatra.{ScalatraServlet, LifeCycle}
+import pl.kodujdlapolski.ztm.api.v1_0.{MetroValidationsServlet, EngineVersionServlet, VehicleLocationsServlet}
 import pl.kodujdlapolski.ztm.common.ServletCompanion
 import pl.kodujdlapolski.ztm.common.web.SwaggerApiDoc
 import pl.kodujdlapolski.ztm.core.Beans
-import pl.kodujdlapolski.ztm.records.{MetroValidationsServlet, EngineVersionServlet}
-import pl.kodujdlapolski.ztm.web.{VehicleLocationsServlet, PingServlet}
+import pl.kodujdlapolski.ztm.web.PingServlet
 import scala.reflect.runtime._
 
 class ScalatraBootstrap extends LifeCycle {

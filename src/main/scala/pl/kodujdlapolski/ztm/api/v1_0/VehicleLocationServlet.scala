@@ -1,4 +1,4 @@
-package pl.kodujdlapolski.ztm.web
+package pl.kodujdlapolski.ztm.api.v1_0
 
 import org.scalatra.swagger.{SwaggerSupport, Swagger}
 import pl.kodujdlapolski.ztm.common.web.JsonServlet

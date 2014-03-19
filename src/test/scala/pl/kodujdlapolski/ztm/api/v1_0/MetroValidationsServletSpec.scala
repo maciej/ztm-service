@@ -1,4 +1,4 @@
-package pl.kodujdlapolski.ztm.records
+package pl.kodujdlapolski.ztm.api.v1_0
 
 import org.scalatest.{BeforeAndAfterEach, ShouldMatchers}
 import org.scalatest.mock.MockitoSugar
@@ -7,6 +7,7 @@ import org.scalatra.swagger.Swagger
 import org.joda.time.LocalDate
 import pl.kodujdlapolski.ztm.scalatra.ScalatraFlatSpec
 import pl.kodujdlapolski.ztm.common.dateformats.NumericYearMonthDate
+import pl.kodujdlapolski.ztm.records.{Stations, MetroValidationsProc}
 
 class MetroValidationsServletSpec extends ScalatraFlatSpec
 with ShouldMatchers with MockitoSugar with BeforeAndAfterEach {

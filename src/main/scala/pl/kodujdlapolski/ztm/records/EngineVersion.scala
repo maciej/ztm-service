@@ -24,24 +24,3 @@ class EngineVersionProc(db: TimetableDb) {
   }
 
 }
-
-class EngineVersionServlet(engineVersionProc: EngineVersionProc, val swagger: Swagger) extends JsonServlet
-with EngineVersionSwag {
-
-  get("/", operation(getOperation)) {
-    engineVersionProc.get()
-  }
-
-}
-
-object EngineVersionServlet extends ServletCompanion {
-  override val MappingPath: String = "engine-version"
-}
-
-trait EngineVersionSwag extends SwaggerSupport {
-  override protected def applicationName = Some(EngineVersionServlet.MappingPath)
-
-  override protected def applicationDescription = "ZTM MySQL db version"
-
-  val getOperation = apiOperation[EngineVersion]("engineVersion").summary("returns engine version")
-}
