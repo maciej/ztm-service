@@ -70,6 +70,8 @@ object Dependencies {
     casbah
   )
 
+  val oauth2 = "com.nulab-inc" %% "scala-oauth2-core" % "0.5.1"
+
   val akkaVersion = "2.3.0"
   val akkaActors = "com.typesafe.akka" %% "akka-actor" % akkaVersion force()
   val akkaTestKit = "com.typesafe.akka" %% "akka-testkit" % akkaVersion % "test" force()

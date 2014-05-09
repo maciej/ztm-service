@@ -29,7 +29,8 @@ object ZtmBuild extends Build {
       mainClass in assembly := Some("pl.kodujdlapolski.ztm.ZtmWeb")
     ) ++ assemblySettings ++ ScalatraPlugin.scalatraSettings
 
-  lazy val commonDependencies = baseDependencies ++ jodaTime ++ macwire ++ logging ++ httpStack ++ mongodbStack ++ akka
+  lazy val commonDependencies = baseDependencies ++ jodaTime ++ macwire ++ logging ++ httpStack ++ mongodbStack ++ akka ++
+    Seq(oauth2)
 
   lazy val root = Project(
     id = "ztm-service",
