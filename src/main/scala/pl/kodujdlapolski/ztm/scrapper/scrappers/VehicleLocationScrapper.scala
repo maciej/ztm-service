@@ -10,12 +10,11 @@ import com.typesafe.scalalogging.slf4j.Logging
 class VehicleLocationScrapper(proxy: VehicleLocationsProcProxy) extends Actor with Logging {
 
   override def receive = {
-    case ScrapCommand => {
+    case ScrapCommand =>
       val beforeUpdateCount = VehicleLocationRecord.count
       proxy.latestValidData().foreach(VehicleLocationRecord.addUpdate)
       val afterUpdateCount = VehicleLocationRecord.count
       logger.debug(s"Vehicle Location Scrapper. Updated ${afterUpdateCount - beforeUpdateCount} records.")
-    }
   }
 }
 

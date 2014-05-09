@@ -7,7 +7,7 @@ import pl.kodujdlapolski.ztm.records.{VehicleLocation, VehicleTypes}
 import com.foursquare.rogue.LatLong
 import com.softwaremill.thegarden.mongodb.field.DateField
 import com.softwaremill.thegarden.mongodb.MongodbIndexProvider
-import org.joda.time.Minutes.{minutes}
+import org.joda.time.Minutes.minutes
 import org.joda.time.{Minutes, DateTime}
 
 /*
@@ -88,6 +88,6 @@ private[mongodb] object VehicleLocationConverters {
     vehicleType(entity.vehicleType).
     loc(LatLong(entity.latitude, entity.longitude)).
     brigade(entity.brigade).line(entity.line).
-    train(entity.taborowy).
+    train(entity.train).
     updatedAt(entity.lastUpdate)
 }

@@ -29,12 +29,10 @@ import com.foursquare.rogue.LatLong
  * Important implementation note: cutoff requests that are asking for data >21min old
  */
 
-case class VehicleLocation(vehicleType: VehicleType, taborowy: String, line: String, brigade: String,
+case class VehicleLocation(vehicleType: VehicleType, train: String, line: String, brigade: String,
                            latitude: Float, longitude: Float, lastUpdate: DateTime) {
 
   def loc = LatLong(latitude, longitude)
-
-  def train = taborowy
 }
 
 class VehicleLocationsProc(db: InfoDb) extends Logging {

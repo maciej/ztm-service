@@ -11,6 +11,7 @@ with VehicleLocationsSwag {
 
   get("/", operation(getOperation)) {
     proc.latestSince(DateTime.now().minusMinutes(10)).filter(VehicleLocationFilters.OnlyValid)
+      .map(VehicleLocationView.fromEntity)
   }
 }
 
