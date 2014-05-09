@@ -23,7 +23,7 @@ class ScalatraBootstrap extends LifeCycle {
   override def init(context: ServletContext) {
     val beans = Option(context.getAttribute("beans").asInstanceOf[Beans]).orElse(Some(Beans)).get
 
-    context.setInitParameter("org.eclipse.jetty.servlet.Default.dirAllowed", "false");
+    context.setInitParameter("org.eclipse.jetty.servlet.Default.dirAllowed", "false")
 
     val servlets = List(
       new PingServlet,
